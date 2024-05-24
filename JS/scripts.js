@@ -88,9 +88,152 @@ const ducati = criarMoto("Ducati", "Multistrada");
 console.log(ducati);
 console.log(Object.getPrototypeOf(ducati));
 
-function Iates(fabricante,pes) {
-    this.fabricante = fabricante;
-    this.pes = pes;
+function Iates(fabricante, pes) {
+  this.fabricante = fabricante;
+  this.pes = pes;
 }
-const intermarine = new Iates("Inter Marine",46);
+const intermarine = new Iates("Inter Marine", 46);
 console.log(intermarine);
+
+Iates.prototype.preco = function () {
+  console.log("Milhões !!!");
+};
+
+intermarine.preco();
+console.log(Iates.prototype);
+
+// classes es6
+class Cervejas {
+  constructor(fornecedor, tipo) {
+    this.fornecedor = fornecedor;
+    this.tipo = tipo;
+  }
+}
+const imperio = new Cervejas("Império", "Puro Malte");
+console.log(imperio);
+console.log(Object.getPrototypeOf(imperio));
+
+class Iphone {
+  constructor(geracao, modelo) {
+    this.geracao = geracao;
+    this.modelo = modelo;
+  }
+
+  detalheIphone() {
+    this.cor = "Aluminiun";
+    console.log(
+      `É um Iphone ${this.geracao}, do modelo ${this.modelo} e cor ${this.cor}`
+    );
+  }
+}
+
+const quinze = new Iphone(15, "Pro");
+
+console.log(quinze);
+quinze.detalheIphone();
+
+Iphone.memoria = "128G";
+
+const treze = new Iphone(13, "11");
+console.log(treze);
+console.log(treze.memoria);
+
+Iphone.prototype.memoria = "128G";
+console.log(treze.memoria);
+console.log(quinze.memoria);
+
+// override
+class Imovel {
+  constructor(tipo, m2) {
+    this.tipo = tipo;
+    this.m2 = m2;
+    this.valor = function () {
+      const custo = m2 * 100;
+      return custo;
+    };
+  }
+}
+const loft = new Imovel("Loft", 200);
+console.log(loft);
+console.log(`O ${loft.tipo} tem ${loft.m2} e custa ${loft.valor()}`);
+Imovel.prototype.bairro = "Qualquer um !";
+console.log(
+  `O ${loft.tipo} tem ${loft.m2} , custa ${loft.valor()}, no bairro ${
+    Imovel.bairro
+  }`
+);
+
+const balcony = new Imovel("Balcony", 1000);
+console.log(balcony);
+console.log(
+  `O ${balcony.tipo} tem ${balcony.m2} , custa ${balcony.valor()}, no bairro ${
+    balcony.bairro
+  }`
+);
+
+// symbol
+class Aviao {
+  constructor(marca, turbina, capacidade) {
+    this.marca = marca;
+    this.turbina = turbina;
+    this.capacidade = capacidade;
+  }
+}
+
+const asas = Symbol();
+Aviao.prototype[asas] = 2;
+
+const boeing = new Aviao("Boeing", 2, 237);
+console.log(boeing);
+console.log(boeing[asas]);
+
+// getter e setter
+class Post {
+  constructor(titulo, descricao, tags) {
+    this.titulo = titulo;
+    this.descricao = descricao;
+    this.tags = tags;
+  }
+  get exibirTITULO() {
+    return `Você está lendo: ${this.titulo}`;
+  }
+  set adicionarTags(tags) {
+    const tagsLista = tags.split(", ");
+    this.tags = tagsLista;
+  }
+}
+
+const meuPost = new Post(
+  "Diário da volta ao mundo",
+  "Aventuras, paisagens e cultura."
+);
+
+console.log(meuPost);
+console.log(meuPost.exibirTITULO);
+
+meuPost.adicionarTags = "Acampamento, escalada, caiaque";
+console.log(meuPost);
+
+// herança
+class Mamifero {
+  constructor(patas) {
+    this.patas = patas;
+  }
+}
+
+class Lobo extends Mamifero {
+  constructor(patas,origem) {
+    super (patas,patas);
+    this.origem = origem;
+  }
+}
+
+const loboBrasil = new Lobo(4,"Brasil");
+console.log(loboBrasil);
+console.log(loboBrasil.patas);
+
+// instance of
+console.log (loboBrasil instanceof Lobo);
+console.log (Lobo  instanceof Mamifero);
+console.log(new Lobo(4, "teste") instanceof Mamifero);
+console.log(new Post("a", "b") instanceof Lobo);
